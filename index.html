@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>علیرضا کریمی | برنامه‌نویس فرانت‌اند</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#ff6a1a;--accent:#19c7b8;--bg:#0d0f14;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#f4f5f8;--muted:#a8adba}
+[data-theme="light"]{--bg:#fff6ee;--card:rgba(255,255,255,.75);--line:rgba(0,0,0,.1);--text:#1c1a18;--muted:#6b625a}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--bg);color:var(--text);line-height:1.9;transition:background .5s,color .5s;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 18s ease-in-out infinite}
+.b1{width:480px;height:480px;background:var(--orange);top:-120px;right:-100px}
+.b2{width:420px;height:420px;background:var(--accent);bottom:-140px;left:-100px;animation-delay:-6s}
+.b3{width:300px;height:300px;background:#ff3d71;top:45%;left:40%;opacity:.3;animation-delay:-12s}
+[data-theme="light"] .blob{opacity:.35}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-70px,60px) scale(1.15)}66%{transform:translate(60px,-50px) scale(.9)}}
+#net{position:absolute;inset:0}
+#welcome{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--bg);transition:opacity .8s,visibility .8s}
+#welcome.hide{opacity:0;visibility:hidden}
+.w-inner{text-align:center;padding:0 16px}
+.w-ring{width:120px;height:120px;margin:0 auto 24px;border-radius:50%;border:4px solid transparent;border-top-color:var(--orange);border-bottom-color:var(--accent);animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.w-title{font-size:clamp(28px,7vw,54px);font-weight:800;display:flex;gap:.25em;justify-content:center;flex-wrap:wrap}
+.w-title span{display:inline-block;opacity:0;transform:translateY(40px) rotate(8deg);animation:pop .7s forwards;background:linear-gradient(90deg,var(--orange),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes pop{to{opacity:1;transform:none}}
+.w-sub{color:var(--muted);margin-top:8px;opacity:0;animation:pop .8s 1.4s forwards}
+.wrap{max-width:980px;margin:0 auto;padding:24px 20px 90px}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:24px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+section{margin-top:28px;padding:28px}
+h2{font-size:1.5rem;margin-bottom:16px;padding-right:14px;border-right:5px solid var(--orange)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.admin-btn{padding:8px 18px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;cursor:pointer;transition:.3s}
+.admin-btn:hover{border-color:var(--orange);color:var(--orange)}
+.toggle{position:relative;width:78px;height:38px;border-radius:99px;border:none;cursor:pointer;background:linear-gradient(120deg,#1b2a4a,#3b3f8f);transition:background .5s;box-shadow:inset 0 0 0 2px var(--line)}
+[data-theme="light"] .toggle{background:linear-gradient(120deg,#ffd27a,var(--orange))}
+.knob{position:absolute;top:4px;right:4px;width:30px;height:30px;border-radius:50%;background:#f4f1de;display:grid;place-items:center;font-size:17px;transition:transform .5s cubic-bezier(.6,-.4,.3,1.4),background .5s}
+[data-theme="light"] .knob{transform:translateX(-40px);background:#fff}
+.stars{position:absolute;left:12px;top:8px;font-size:10px;letter-spacing:4px;color:#fff;transition:opacity .4s}
+[data-theme="light"] .stars{opacity:0}
+.hero{text-align:center;padding:40px 24px}
+.avatar{width:170px;height:170px;margin:0 auto 20px;border-radius:50%;padding:5px;background:conic-gradient(var(--orange),var(--accent),var(--orange));animation:spin 8s linear infinite}
+.avatar-in{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:var(--bg);animation:spin 8s linear infinite reverse;display:grid;place-items:center;font-size:56px}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.hero h1{font-size:clamp(28px,6vw,46px);font-weight:800}
+.role{color:var(--orange);font-weight:600;font-size:1.15rem}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+.chip{padding:5px 16px;border-radius:99px;border:1px solid var(--line);font-size:.92rem;color:var(--muted)}
+.chip.sk{color:var(--text);background:var(--card)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px}
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.work{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);transition:transform .35s,border-color .35s}
+.work:hover{transform:translateY(-6px);border-color:var(--orange)}
+.work .ph{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,var(--orange),var(--accent));display:grid;place-items:center;color:#fff;font-weight:600}
+.work img{width:100%;height:100%;object-fit:cover;display:block}
+.work .info{padding:14px 16px}
+.work h3{font-size:1.05rem}
+.work p{color:var(--muted);font-size:.9rem}
+.work .go{display:inline-block;margin-top:8px;color:var(--accent);font-weight:600}
+.videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.video{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000}
+.video video{width:100%;display:block;aspect-ratio:16/9;background:linear-gradient(135deg,#222,#000)}
+.video small{display:block;padding:8px 14px;background:var(--card);color:var(--muted)}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.link{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:16px;border:1px solid var(--line);background:var(--card);transition:.3s;min-width:0}
+.link:hover{border-color:var(--orange);transform:translateY(-3px)}
+.link b{display:block;font-size:.85rem;color:var(--muted);font-weight:400}
+.link span.i{font-size:24px}
+.link div{min-width:0;overflow-wrap:anywhere}
+footer{text-align:center;color:var(--muted);margin-top:32px;font-size:.9rem}
+.learn{display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:16px;border:1px dashed var(--orange);background:var(--card)}
+.learn .i{font-size:28px}
+.follow{text-align:center}
+.fcount{font-size:2.4rem;font-weight:800;color:var(--orange);line-height:1.2}
+.frow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 6px}
+.frow input{flex:1 1 200px;max-width:260px}
+input{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-size:16px}
+.frow input,.box input{direction:ltr;text-align:left}
+#fname{direction:rtl;text-align:right}
+.btn{display:inline-block;padding:10px 22px;border:none;border-radius:12px;font:inherit;font-weight:600;cursor:pointer;color:#fff;background:linear-gradient(90deg,var(--orange),#ff9a3c);transition:transform .2s}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.btn.red{background:#e0384a;padding:5px 12px;font-size:.85rem}
+.err{color:#ff5d6c;font-size:.9rem;min-height:1.4em}
+.ok{color:var(--accent);font-size:.9rem;min-height:1.4em}
+.modal{position:fixed;inset:0;z-index:90;display:none;place-items:center;background:rgba(0,0,0,.6);padding:20px}
+.modal.open{display:grid}
+.box{width:100%;max-width:420px;max-height:90vh;overflow-y:auto;padding:28px;background:var(--bg);border:1px solid var(--line);border-radius:22px;animation:pop .4s both}
+.box h3{margin-bottom:14px}
+.box input{margin-bottom:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stat{text-align:center;padding:12px 4px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+.stat b{display:block;font-size:1.5rem;color:var(--orange)}
+.stat small{color:var(--muted);font-size:.75rem}
+.flist{list-style:none;margin:10px 0 14px;max-height:260px;overflow-y:auto}
+.flist li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--card)}
+.flist div{min-width:0;overflow-wrap:anywhere;font-size:.9rem}
+.flist small{color:var(--muted);direction:ltr;display:block;text-align:right}
+.hero{position:relative}
+#music{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:12px;width:fit-content;padding:12px 22px;border-radius:99px;border:1.5px solid var(--orange);background:linear-gradient(90deg,rgba(255,106,26,.3),rgba(25,199,184,.3));color:var(--text);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 0 22px rgba(255,106,26,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .2s,box-shadow .3s}
+#music:hover{transform:scale(1.05);box-shadow:0 0 32px rgba(255,106,26,.65)}
+#music:active{transform:scale(.96)}
+.eq{display:flex;gap:3px;align-items:flex-end;height:22px}
+.eq i{width:4px;height:6px;border-radius:2px;background:linear-gradient(var(--accent),var(--orange))}
+#music.on .eq i{animation:eq 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}.eq i:nth-child(4){animation-delay:.6s}
+@keyframes eq{0%,100%{height:5px}50%{height:22px}}
+.fbox{margin:22px auto 0;padding:18px;max-width:560px;border:1px solid var(--line);border-radius:20px;background:var(--card)}
+@media (max-width:600px){
+  #music{position:static;margin:0 auto 16px}
+  .wrap{padding:14px 12px 90px}
+  section{padding:20px 16px;margin-top:18px;border-radius:20px}
+  .hero{padding:28px 16px}
+  .avatar{width:130px;height:130px}
+  h2{font-size:1.25rem}
+  .blob{filter:blur(60px)}.b1,.b2{width:280px;height:280px}.b3{display:none}
+  .box{padding:20px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .frow input{max-width:none}
+  .actions .btn{flex:1 1 140px;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><canvas id="net"></canvas></div>
+
+<!-- 🎵 موزیک پس‌زمینه: فایل موزیکت رو توی پوشه music بذار با اسم music.mp3 -->
+<audio id="bgm" loop preload="auto"><source src="music/music.mp3" type="audio/mpeg"></audio>
+
+<div id="welcome"><div class="w-inner">
+  <div class="w-ring"></div>
+  <div class="w-title" id="wt"></div>
+  <p class="w-sub">به صفحه شخصی من خوش اومدی</p>
+</div></div>
+
+<div class="wrap">
+  <div class="top">
+    <button class="toggle" id="theme" aria-label="تغییر تم روشن/تاریک"><span class="stars">✦ ✧ ✦</span><span class="knob" id="knob">🌙</span></button>
+    <button class="admin-btn" id="adminOpen">ورود ادمین</button>
+  </div>
+
+  <section class="glass hero">
+    <button id="music" aria-label="پخش/توقف موزیک"><span class="eq"><i></i><i></i><i></i><i></i></span><span id="mlabel">پخش موزیک</span></button>
+    <div class="avatar"><div class="avatar-in">
+      <img src="images/profile.jpg" alt="علیرضا کریمی" onerror="this.remove()">
+      <span style="position:absolute"></span>
+    </div></div>
+    <h1>علیرضا کریمی</h1>
+    <p class="role">برنامه‌نویس سایت | طراح حرفه‌ای فرانت‌اند</p>
+    <div class="chips">
+      <span class="chip">📍 بندرعباس</span>
+      <span class="chip">🎂 متولد ۱۵ آذر ۱۳۸۵</span>
+    </div>
+    <div class="follow fbox">
+    <div class="fcount" id="fCount">0</div>
+    <small style="color:var(--muted)">نفر منو دنبال می‌کنن</small>
+    <div id="fForm">
+      <div class="frow">
+        <input id="fname" placeholder="نام شما" autocomplete="name" maxlength="40">
+        <input id="fcontact" placeholder="شماره تماس یا ایمیل" autocomplete="off" maxlength="60" inputmode="email">
+      </div>
+      <button class="btn" id="fBtn">➕ فالو</button>
+    </div>
+    <div id="fDone" style="display:none"><p style="margin:10px 0">✅ شما منو دنبال می‌کنی، ممنون!</p><button class="btn ghost" id="uBtn">➖ آنفالو</button></div>
+    <div class="err" id="fErr"></div>
+  </div>
+    <div class="actions">
+      <a class="btn" id="lnkGh" href="#" target="_blank" rel="noopener">⭐ GitHub</a>
+      <!-- 📄 فایل رزومه PDF رو کنار همین فایل بذار با اسم resume.pdf -->
+      <a class="btn ghost" href="resume.pdf" download="Alireza-Karimi-Resume.pdf">📄 دانلود رزومه</a>
+    </div>
+  </section>
+
+  <section class="glass">
+    <h2>درباره من</h2>
+    <p>سلام! من علیرضا هستم، برنامه‌نویس سایت و طراح فرانت‌اند اهل بندرعباس. سایت‌هایی طراحی می‌کنم که هم قشنگ باشن، هم روی موبایل و کامپیوتر روان کار کنن. اگه برای کسب‌وکارت سایت می‌خوای، پایین می‌تونی نمونه‌کارهام رو ببینی و باهام در ارتباط باشی.</p>
+  </section>
+
+  <section class="glass">
+    <h2>در حال یادگیری</h2>
+    <div class="learn"><span class="i">🚀</span><p>در حال توسعه مهارت‌هایم در JavaScript و Backend</p></div>
+  </section>
+
+  <section class="glass">
+    <h2>مهارت‌ها</h2>
+    <div class="chips" style="justify-content:flex-start;margin-top:0">
+      <span class="chip sk">💻 HTML / CSS</span>
+      <span class="chip sk">⚡ JavaScript</span>
+      <span class="chip sk">📱 Responsive Design</span>
+      <span class="chip sk">🎨 UI Design</span>
+      <span class="chip sk">🟢 Node.js</span>
+      <span class="chip sk">🔀 Git</span>
+    </div>
+  </section>
+
+  <section class="glass">
+    <h2>نمونه کارها</h2>
+    <div class="works">
+      <a class="work" href="https://example.com" target="_blank" rel="noopener">
+        <div class="ph"><img src="images/work1.jpg" alt="نمونه کار ۱" onerror="this.remove()"></div>
+        <div class="info"><h3>aura music </h3><p>aura music  بهترین مکان برای عاشقانه موزیک های خارجی  با ظاهری بروز </p><span class="go">سایت درحالت ازمایشی هست ↖</span></div>
+      </a>
+      <a class="work" href="https://barberamir.ir" target="_blank" rel="noopener">
+        <div class="ph"><img src="images/work2.jpg" alt="نمونه کار ۲" onerror="this.remove()"></div>
+        <div class="info"><h3>barberamir</h3><p>سایته رزرو نوبت ارایشگاه مردانه در بندرعباس و انتخاب خدمات </p><span class="go">دیدن سایت ↖</span></div>
+      </a>
+      <a class="work" href="https://example.com" target="_blank" rel="noopener">
+        <div class="ph"><img src="images/work3.jpg" alt="نمونه کار ۳" onerror="this.remove()"></div>
+        <div class="info"><h3>mobix</h3><p>سایت فروشگاه موبایل و لوازم دیجیتال /نمونه طراحی </p><span class="go">سایت درحالت ازمایشی هست ↖</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="glass">
+    <h2>ویدیو</h2>
+    <div class="videos">
+      <div class="video"><video controls playsinline preload="metadata" poster="images/video1-cover.jpg"><source src="videos/video1.mp4" type="video/mp4"></video><small>پروژه aura music</small></div>
+      <div class="video"><video controls playsinline preload="metadata" poster="images/video2-cover.jpg"><source src="videos/video2.mp4" type="video/mp4"></video><small>پروژه lumora </small></div>
+    </div>
+  </section>
+
+  <section class="glass">
+    <h2>ارتباط با من</h2>
+    <div class="links">
+      <a class="link" id="lnkIg" href="#" target="_blank" rel="noopener"><span class="i">📸</span><div><b>اینستاگرام</b><span id="txtIg"></span></div></a>
+      <a class="link" id="lnkTg" href="#" target="_blank" rel="noopener"><span class="i">✈️</span><div><b>تلگرام</b><span id="txtTg"></span></div></a>
+      <a class="link" id="lnkGh2" href="#" target="_blank" rel="noopener"><span class="i">⭐</span><div><b>GitHub</b><span id="txtGh"></span></div></a>
+      <a class="link" href="mailto:ak6547461@gmail.com"><span class="i">✉️</span><div><b>ایمیل</b><span style="direction:ltr;display:inline-block">ak6547461@gmail.com</span></div></a>
+    </div>
+  </section>
+  <footer>© علیرضا کریمی</footer>
+</div>
+
+<div class="modal" id="loginModal"><div class="box glass">
+  <h3>ورود ادمین</h3>
+  <input id="u" placeholder="نام کاربری" autocomplete="username">
+  <input id="p" type="password" placeholder="رمز عبور" autocomplete="current-password">
+  <div class="err" id="err"></div>
+  <button class="btn" id="loginBtn">ورود</button> <button class="btn ghost" data-close>بستن</button>
+</div></div>
+
+<div class="modal" id="panelModal"><div class="box glass">
+  <h3>پنل ادمین</h3>
+  <div class="stats">
+    <div class="stat"><b id="sTotal">0</b><small>کل بازدید</small></div>
+    <div class="stat"><b id="sToday">0</b><small>امروز</small></div>
+    <div class="stat"><b id="sUnique">0</b><small>بازدیدکننده</small></div>
+    <div class="stat"><b id="sFol">0</b><small>فالوور</small></div>
+  </div>
+  <h3 style="font-size:1rem">فالوورها</h3>
+  <ul class="flist" id="fList"></ul>
+  <p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">آمار بازدید فقط برای همین مرورگر است.</p>
+  <button class="btn ghost" data-close>بستن</button>
+</div></div>
+
+<script>
+/* ============ ⚙️ تنظیمات: فقط این قسمت را ویرایش کن ============ */
+const CONFIG = {
+  instagram: "rezakarimili",
+  telegram:  "Alirezakarimili",
+  github:    "ali-karimi2005",      // ⭐ آیدی گیت‌هاب خودت
+  adminUser: "ronin",
+  adminPass: "password",
+  welcomeText: "سلام، من علیرضا هستم",
+  // 🔥 برای اینکه فالوورها واقعی و برای همه مشترک باشن، آدرس Firebase Realtime Database بذار
+  // مثال: "https://my-site-default-rtdb.firebaseio.com"  (اگه خالی باشه فقط توی همین مرورگر ذخیره میشه)
+  dbUrl: ""
+};
+/* ============================================================ */
+const $ = id => document.getElementById(id);
+$('lnkIg').href = 'https://instagram.com/' + CONFIG.instagram; $('txtIg').textContent = '@' + CONFIG.instagram;
+$('lnkTg').href = 'https://t.me/' + CONFIG.telegram; $('txtTg').textContent = '@' + CONFIG.telegram;
+const gh = 'https://github.com/' + CONFIG.github;
+$('lnkGh').href = gh; $('lnkGh2').href = gh; $('txtGh').textContent = CONFIG.github;
+
+const wt = $('wt');
+CONFIG.welcomeText.split(' ').forEach((w, i) => { const s = document.createElement('span'); s.textContent = w; s.style.animationDelay = (0.2 + i * 0.25) + 's'; wt.appendChild(s); });
+setTimeout(() => $('welcome').classList.add('hide'), 2800);
+
+const root = document.documentElement, knob = $('knob');
+function setTheme(t){ root.dataset.theme = t; knob.textContent = t === 'dark' ? '🌙' : '☀️'; try{localStorage.setItem('theme', t)}catch(e){} }
+let saved = 'dark'; try{ saved = localStorage.getItem('theme') || 'dark' }catch(e){}
+setTheme(saved);
+$('theme').onclick = () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+
+/* ===== 🎵 موزیک: مرورگرها پخش خودکار با صدا رو تا اولین لمس/کلیک بلاک می‌کنن، پس با اولین تعامل شروع میشه ===== */
+const au = $('bgm'), mb = $('music'); let want = true;
+function setM(on){ mb.classList.toggle('on',on); $('mlabel').textContent = on ? 'در حال پخش 🎶' : 'پخش موزیک'; }
+function startMusic(){ au.volume = .6; au.play().then(() => setM(true)).catch(() => {}); }
+startMusic();
+const evs = ['pointerdown','click','keydown','touchend'];
+function first(){ if(want) startMusic(); evs.forEach(e => removeEventListener(e, first)); }
+evs.forEach(e => addEventListener(e, first));
+mb.onclick = ev => { ev.stopPropagation(); if(au.paused){ want = true; startMusic(); } else { want = false; au.pause(); setM(false); } };
+
+/* ===== شمارش بازدید ===== */
+function load(){ try{ return JSON.parse(localStorage.getItem('stats')) || {total:0, days:{}, unique:0} }catch(e){ return {total:0, days:{}, unique:0} } }
+(function(){
+  try{
+    if(sessionStorage.getItem('counted')) return;
+    sessionStorage.setItem('counted','1');
+    const s = load(), d = new Date().toISOString().slice(0,10);
+    s.total++; s.days[d] = (s.days[d]||0) + 1;
+    if(!localStorage.getItem('seen')){ s.unique++; localStorage.setItem('seen','1'); }
+    localStorage.setItem('stats', JSON.stringify(s));
+  }catch(e){}
+})();
+
+/* ===== فالوورها ===== */
+const DB = CONFIG.dbUrl.replace(/\/$/, '');
+async function fGet(){
+  if(DB){ const o = await (await fetch(DB + '/followers.json')).json() || {}; return Object.entries(o).map(([id, v]) => ({id, ...v})); }
+  try{ return JSON.parse(localStorage.getItem('followers')) || [] }catch(e){ return [] }
+}
+async function fAdd(x){
+  if(DB){ const r = await fetch(DB + '/followers.json', {method:'POST', body: JSON.stringify(x)}); return (await r.json()).name; }
+  const l = await fGet(); x.id = 'l' + Date.now(); l.push(x); localStorage.setItem('followers', JSON.stringify(l)); return x.id;
+}
+async function fDel(id){
+  if(DB){ await fetch(`${DB}/followers/${id}.json`, {method:'DELETE'}); return; }
+  localStorage.setItem('followers', JSON.stringify((await fGet()).filter(f => f.id !== id)));
+}
+const mine = () => { try{ return localStorage.getItem('myFollow') }catch(e){ return null } };
+async function refresh(){
+  try{
+    const l = await fGet();
+    $('fCount').textContent = l.length;
+    const m = mine(), on = m && l.some(f => f.id === m);
+    if(m && !on) try{ localStorage.removeItem('myFollow') }catch(e){}
+    $('fForm').style.display = on ? 'none' : 'block'; $('fDone').style.display = on ? 'block' : 'none';
+    return l;
+  }catch(e){ $('fErr').textContent = 'خطا در ارتباط با سرور'; return []; }
+}
+$('fBtn').onclick = async () => {
+  const name = $('fname').value.trim(), c = $('fcontact').value.trim();
+  const okPhone = /^\+?[\d\s-]{8,16}$/.test(c), okMail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c);
+  if(name.length < 2) return $('fErr').textContent = 'لطفا نامتو بنویس';
+  if(!okPhone && !okMail) return $('fErr').textContent = 'شماره تماس یا ایمیل معتبر وارد کن';
+  $('fErr').textContent = ''; $('fBtn').disabled = true;
+  try{ const id = await fAdd({name, contact:c, date:new Date().toISOString().slice(0,10)}); localStorage.setItem('myFollow', id); $('fname').value = $('fcontact').value = ''; }
+  catch(e){ $('fErr').textContent = 'ثبت نشد، دوباره تلاش کن'; }
+  $('fBtn').disabled = false; refresh();
+};
+$('uBtn').onclick = async () => { try{ await fDel(mine()); localStorage.removeItem('myFollow'); }catch(e){} refresh(); };
+refresh();
+
+async function renderAdmin(){
+  const l = await refresh(), ul = $('fList'); ul.textContent = ''; $('sFol').textContent = l.length;
+  if(!l.length){ const li = document.createElement('li'); li.textContent = 'هنوز فالووری نیست'; ul.appendChild(li); return; }
+  l.forEach(f => {
+    const li = document.createElement('li'), d = document.createElement('div'), n = document.createElement('span'), s = document.createElement('small'), b = document.createElement('button');
+    n.textContent = f.name; s.textContent = f.contact; d.append(n, s);
+    b.className = 'btn red'; b.textContent = 'حذف';
+    b.onclick = async () => { if(confirm('این فالوور حذف شود؟')){ await fDel(f.id); renderAdmin(); } };
+    li.append(d, b); ul.appendChild(li);
+  });
+}
+
+/* ===== مودال‌ها ===== */
+$('adminOpen').onclick = () => { $('err').textContent=''; $('loginModal').classList.add('open'); $('u').focus(); };
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => b.closest('.modal').classList.remove('open'));
+$('loginBtn').onclick = () => {
+  if($('u').value === CONFIG.adminUser && $('p').value === CONFIG.adminPass){
+    const s = load(), d = new Date().toISOString().slice(0,10);
+    $('sTotal').textContent = s.total; $('sToday').textContent = s.days[d]||0; $('sUnique').textContent = s.unique;
+    $('p').value=''; $('loginModal').classList.remove('open'); $('panelModal').classList.add('open'); renderAdmin();
+  } else $('err').textContent = 'نام کاربری یا رمز اشتباه است';
+};
+$('p').addEventListener('keydown', e => { if(e.key==='Enter') $('loginBtn').click(); });
+
+/* ===== شبکه ذرات ===== */
+const cv = $('net'), cx = cv.getContext('2d'); let W, H, pts = [];
+function size(){ W = cv.width = innerWidth; H = cv.height = innerHeight; pts = Array.from({length: Math.min(70, Math.floor(W/18))}, () => ({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.5, vy:(Math.random()-.5)*.5})); }
+size(); addEventListener('resize', size);
+(function draw(){
+  cx.clearRect(0,0,W,H);
+  const col = root.dataset.theme === 'dark' ? '255,255,255' : '80,40,10';
+  pts.forEach((a,i) => {
+    a.x += a.vx; a.y += a.vy;
+    if(a.x<0||a.x>W) a.vx*=-1; if(a.y<0||a.y>H) a.vy*=-1;
+    cx.fillStyle = `rgba(${col},.5)`; cx.beginPath(); cx.arc(a.x,a.y,1.6,0,7); cx.fill();
+    for(let j=i+1;j<pts.length;j++){ const b=pts[j], dd=Math.hypot(a.x-b.x,a.y-b.y);
+      if(dd<130){ cx.strokeStyle=`rgba(${col},${.14*(1-dd/130)})`; cx.beginPath(); cx.moveTo(a.x,a.y); cx.lineTo(b.x,b.y); cx.stroke(); } }
+  });
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
